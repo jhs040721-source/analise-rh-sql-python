@@ -158,4 +158,33 @@ O ambiente Python foi configurado no VS Code e as dependências necessárias for
 
 O teste em um ambiente temporário confirmou que a instalação das bibliotecas pode ser reproduzida a partir do arquivo `requirements.txt`.
 
-A próxima etapa do projeto será importar os arquivos CSV e iniciar a análise exploratória dos dados.
+
+
+## Análise exploratória — Diagnóstico inicial
+
+Os arquivos CSV foram importados para o Python com a biblioteca Pandas, utilizando a função `pd.read_csv()`.
+
+Foram criados dois DataFrames:
+- `df1`: salários por departamento e cargo.
+- `df2`: funcionários por região e localização.
+
+### Dimensões dos conjuntos de dados
+
+| Conjunto | Registros | Colunas |
+| --- | ---: | ---: |
+| Query 1 | 19 | 7 |
+| Query 2 | 107 | 8 |
+
+As dimensões foram verificadas com o atributo `shape` e correspondem às quantidades registradas na etapa de extração dos dados.
+
+### Identificação das variáveis
+
+O comando `head()` foi utilizado para visualizar os primeiros cinco registros de cada conjunto de dados.
+
+O atributo `dtypes` permitiu identificar os tipos das colunas.
+
+Os salários foram reconhecidos como números inteiros (`int64`), enquanto as informações sobre funcionários, departamentos, cargos e localização foram reconhecidas como texto (`str`).
+
+Os arquivos originais foram preservados, sem alterações.
+
+A próxima etapa será verificar a qualidade dos dados antes de realizar os cálculos estatísticos.
