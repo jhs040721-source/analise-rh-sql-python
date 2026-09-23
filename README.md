@@ -61,4 +61,101 @@ está vinculado, não necessariamente ao seu local de residência.
 - CSVs abertos no VS Code para conferência de legibilidade.
 - Commit de inclusão dos CSVs: `f9f881d`.
 - Commit de integração dos CSVs à main: `2179e33`.
-- Preparação do ambiente Python e análise dos dados: próximas etapas.
+- Preparação do ambiente Python: concluída e documentada. Análise exploratória dos dados: próxima etapa.
+
+## Preparação do ambiente Python
+
+### Objetivo
+
+Preparar um ambiente de desenvolvimento Python no VS Code para realizar a análise exploratória dos dados extraídos do FreeSQL.
+
+O ambiente utiliza bibliotecas para manipulação de dados, cálculos estatísticos e geração de gráficos.
+
+### Ferramentas utilizadas
+
+- Python: linguagem de programação utilizada na análise.
+- VS Code: editor de código e ambiente de desenvolvimento.
+- Pandas: manipulação, organização e análise de dados.
+- Matplotlib: criação de gráficos e visualizações.
+- Seaborn: visualização estatística dos dados.
+- Git e GitHub: controle de versões e publicação do projeto.
+
+### Criação do ambiente virtual
+
+O ambiente virtual permite instalar e utilizar bibliotecas específicas para o projeto, mantendo suas dependências separadas de outros projetos Python.
+
+No terminal PowerShell, a partir da pasta raiz do projeto, executar:
+
+```powershell
+py -m venv .venv
+```
+
+Para ativar o ambiente virtual no Windows:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+Após a ativação, o terminal deverá apresentar o identificador `(.venv)`.
+
+No VS Code, selecionar o interpretador Python localizado em:
+
+`.venv\Scripts\python.exe`
+
+### Instalação das dependências
+
+As bibliotecas necessárias ao projeto estão registradas no arquivo `requirements.txt`.
+
+Com o ambiente virtual ativado, executar:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+O comando instala as dependências e suas respectivas versões, permitindo reproduzir o ambiente utilizado no desenvolvimento.
+
+As principais bibliotecas instaladas são:
+
+| Biblioteca | Versão |
+| --- | --- |
+| Pandas | 3.0.6 |
+| Matplotlib | 3.11.2 |
+| Seaborn | 0.13.2 |
+
+### Teste de reprodução do ambiente
+
+Para verificar se o ambiente poderia ser reconstruído a partir do arquivo `requirements.txt`, foi criado um ambiente virtual temporário denominado `.venv-teste`.
+
+A instalação das dependências foi realizada utilizando diretamente o interpretador desse ambiente:
+
+```powershell
+.\.venv-teste\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Após a instalação, foram testadas as importações das bibliotecas Pandas, Matplotlib e Seaborn.
+
+O teste confirmou o funcionamento das três bibliotecas e retornou as versões esperadas.
+
+Depois da validação, o ambiente temporário foi removido, preservando o ambiente principal `.venv`.
+
+### Controle de arquivos com .gitignore
+
+O arquivo `.gitignore` contém regras para impedir o versionamento de ambientes virtuais, arquivos temporários e configurações locais.
+
+Entre os diretórios e arquivos ignorados estão:
+
+- `.venv/`: ambiente virtual principal.
+- `.venv-teste/`: ambiente virtual temporário de teste.
+- `__pycache__/`: arquivos temporários gerados pelo Python.
+- `.env`: arquivo local de configuração.
+- `.vscode/`: configurações locais do editor.
+
+A verificação com o comando `git status --short` confirmou que os arquivos dos ambientes virtuais não apareciam entre as alterações identificadas pelo Git.
+
+### Resultado da preparação
+
+O ambiente Python foi configurado no VS Code e as dependências necessárias foram instaladas e testadas.
+
+O teste em um ambiente temporário confirmou que a instalação das bibliotecas pode ser reproduzida a partir do arquivo `requirements.txt`.
+
+A próxima etapa do projeto será importar os arquivos CSV e iniciar a análise exploratória dos dados.
