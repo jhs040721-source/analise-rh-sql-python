@@ -1,0 +1,20 @@
+"EMPLOYEE_ID","NOME_FUNCIONARIO","DEPARTAMENTO","CARGO","SALARIO","SALARIO_MINIMO_CARGO","SALARIO_MAXIMO_CARGO"
+100,"Steven King","Executive","President",24000,20080,40000
+101,"Neena Yang","Executive","Administration Vice President",17000,15000,30000
+102,"Lex Garcia","Executive","Administration Vice President",17000,15000,30000
+145,"John Singh","Sales","Sales Manager",14000,10000,20080
+146,"Karen Partners","Sales","Sales Manager",13500,10000,20080
+201,"Michael Martinez","Marketing","Marketing Manager",13000,9000,15000
+205,"Shelley Higgins","Accounting","Accounting Manager",12008,8200,16000
+108,"Nancy Gruenberg","Finance","Finance Manager",12008,8200,16000
+147,"Alberto Errazuriz","Sales","Sales Manager",12000,10000,20080
+168,"Lisa Ozer","Sales","Sales Representative",11500,6000,12008
+148,"Gerald Cambrault","Sales","Sales Manager",11000,10000,20080
+114,"Den Li","Purchasing","Purchasing Manager",11000,8000,15000
+174,"Ellen Abel","Sales","Sales Representative",11000,6000,12008
+149,"Eleni Zlotkey","Sales","Sales Manager",10500,10000,20080
+162,"Clara Vishney","Sales","Sales Representative",10500,6000,12008
+204,"Hermann Brown","Public Relations","Public Relations Representative",10000,4500,10500
+156,"Janette King","Sales","Sales Representative",10000,6000,12008
+150,"Sean Tucker","Sales","Sales Representative",10000,6000,12008
+169,"Harrison Bloom","Sales","Sales Representative",10000,6000,12008
