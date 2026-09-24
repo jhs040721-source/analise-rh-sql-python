@@ -187,4 +187,48 @@ A Query 1 contém somente funcionários com salário maior ou igual a 10.000, n�
 
 A Query 2 será utilizada para as análises geográficas. Os funcionários presentes nas duas consultas não serão contabilizados duas vezes.
 
+## Análise estatística dos salários
+
+Foram calculadas estatísticas descritivas com a biblioteca Pandas para compreender a distribuição salarial dos funcionários.
+
+### Resultados da Query 2 — Panorama salarial
+
+A Query 2 apresenta 107 funcionários com salários maiores que zero.
+
+| Indicador | Resultado |
+| --- | ---: |
+| Quantidade de funcionários | 107 |
+| Salário médio | 6.461,83 |
+| Salário mediano | 6.200,00 |
+| Menor salário | 2.100,00 |
+| Maior salário | 24.000,00 |
+| Primeiro quartil (25%) | 3.100,00 |
+| Terceiro quartil (75%) | 8.900,00 |
+
+A metade central dos salários está entre 3.100,00 e 8.900,00. A média é ligeiramente superior à mediana, indicando uma possível influência dos salários mais elevados sobre o valor médio.
+
+### Resultados da Query 1 — Recorte salarial
+
+A Query 1 apresenta os 19 funcionários com salários iguais ou superiores a 10.000.
+
+| Indicador | Resultado |
+| --- | ---: |
+| Quantidade de funcionários | 19 |
+| Salário médio | 12.632,42 |
+| Salário mediano | 11.500,00 |
+| Menor salário | 10.000,00 |
+| Maior salário | 24.000,00 |
+
+### Influência dos filtros SQL
+
+A Query 1 apresenta média salarial superior à Query 2 porque seleciona apenas os funcionários com salários iguais ou superiores a 10.000.
+
+Como as duas consultas utilizam a mesma base de dados, essa diferença é uma consequência esperada do filtro aplicado, não uma descoberta sobre dois grupos independentes.
+
+A Query 2 oferece uma visão mais abrangente da distribuição salarial dos funcionários.
+
+As comparações por departamento, cargo e região serão realizadas nas próximas etapas para identificar padrões de remuneração relevantes para a análise de RH.
+
+Os valores salariais são apresentados sem símbolo de moeda, pois a moeda não foi confirmada na documentação da base.
+
 

@@ -61,3 +61,36 @@ incompletos = df2[df2[colunas].isna().any(axis=1)]
 
 print("\nFUNCIONÁRIOS COM LOCALIZAÇÃO INCOMPLETA")
 print(incompletos.to_string(index=False))
+
+# Estatísticas salariais da Query 2
+
+
+print("\nESTATÍSTICAS SALARIAIS — QUERY 2")
+
+print("Quantidade de funcionários:", df2["SALARIO"].count())
+print("Salário médio:", df2["SALARIO"].mean())
+print("Salário mediano:", df2["SALARIO"].median())
+
+# Identificar os salários mínimo e máximo
+
+print("Menor salário:", df2["SALARIO"].min())
+print("Maior salário:", df2["SALARIO"].max())
+
+
+# Calcular os quartis salariais da Query 2
+
+print("\nQUARTIS SALARIAIS — QUERY 2")
+
+print("Primeiro quartil (25%):", df2["SALARIO"].quantile(0.25))
+print("Segundo quartil (50%):", df2["SALARIO"].quantile(0.50))
+print("Terceiro quartil (75%):", df2["SALARIO"].quantile(0.75))
+
+# Estatísticas salariais da Query 1
+
+print("\nESTATÍSTICAS SALARIAIS — QUERY 1")
+
+print("Quantidade de funcionários:", df1["SALARIO"].count())
+print("Salário médio:", df1["SALARIO"].mean())
+print("Salário mediano:", df1["SALARIO"].median())
+print("Menor salário:", df1["SALARIO"].min())
+print("Maior salário:", df1["SALARIO"].max())
