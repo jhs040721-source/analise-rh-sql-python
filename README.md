@@ -159,32 +159,32 @@ O ambiente Python foi configurado no VS Code e as dependências necessárias for
 O teste em um ambiente temporário confirmou que a instalação das bibliotecas pode ser reproduzida a partir do arquivo `requirements.txt`.
 
 
+## Verificação da qualidade dos dados
 
-## Análise exploratória — Diagnóstico inicial
+Foram realizadas verificações de valores ausentes, registros duplicados e consistência dos salários utilizando a biblioteca Pandas.
 
-Os arquivos CSV foram importados para o Python com a biblioteca Pandas, utilizando a função `pd.read_csv()`.
+### Resultados
 
-Foram criados dois DataFrames:
-- `df1`: salários por departamento e cargo.
-- `df2`: funcionários por região e localização.
+- Query 1: nenhum valor ausente ou registro duplicado.
+- Query 2: nenhum registro duplicado. Foram identificados dois funcionários com informações geográficas incompletas.
+- Os salários das duas consultas respeitam os filtros estabelecidos no SQL.
 
-### Dimensões dos conjuntos de dados
+### Tratamento dos dados
 
-| Conjunto | Registros | Colunas |
-| --- | ---: | ---: |
-| Query 1 | 19 | 7 |
-| Query 2 | 107 | 8 |
+Não foi necessário excluir ou corrigir registros.
 
-As dimensões foram verificadas com o atributo `shape` e correspondem às quantidades registradas na etapa de extração dos dados.
+A funcionária Susan Jacobs possui o campo ESTADO vazio, mas apresenta país e região identificados.
 
-### Identificação das variáveis
+A funcionária Kimberely Grant não possui departamento nem informações geográficas preenchidos.
 
-O comando `head()` foi utilizado para visualizar os primeiros cinco registros de cada conjunto de dados.
+Os dois registros serão preservados. Nas análises por região, a localização desconhecida será considerada como "Não informado".
 
-O atributo `dtypes` permitiu identificar os tipos das colunas.
+Os arquivos CSV originais permanecem inalterados.
 
-Os salários foram reconhecidos como números inteiros (`int64`), enquanto as informações sobre funcionários, departamentos, cargos e localização foram reconhecidas como texto (`str`).
+### Limitações
 
-Os arquivos originais foram preservados, sem alterações.
+A Query 1 contém somente funcionários com salário maior ou igual a 10.000, não representando todos os funcionários.
 
-A próxima etapa será verificar a qualidade dos dados antes de realizar os cálculos estatísticos.
+A Query 2 será utilizada para as análises geográficas. Os funcionários presentes nas duas consultas não serão contabilizados duas vezes.
+
+
