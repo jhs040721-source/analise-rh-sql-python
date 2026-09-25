@@ -181,3 +181,46 @@ print(
         sales_shipping["REGIAO"].fillna("Não informado")
     ).to_string()
 )
+import matplotlib.pyplot as plt
+
+# Histograma da distribuição salarial — Query 2
+
+media_salario = df2["SALARIO"].mean()
+mediana_salario = df2["SALARIO"].median()
+
+print("\nTESTE DO GRÁFICO")
+print("Média usada no gráfico:", media_salario)
+print("Mediana usada no gráfico:", mediana_salario)
+
+plt.figure(figsize=(10, 6))
+
+plt.hist(
+    df2["SALARIO"],
+    bins=10,
+    rwidth=0.9,
+    edgecolor="black"
+)
+
+plt.axvline(
+    x=media_salario,
+    color="red",
+    linestyle="--",
+    linewidth=3,
+    label=f"Média: {media_salario:.2f}"
+)
+
+plt.axvline(
+    x=mediana_salario,
+    color="green",
+    linestyle=":",
+    linewidth=3,
+    label=f"Mediana: {mediana_salario:.2f}"
+)
+
+plt.title("Distribuição salarial dos 107 funcionários — Query 2")
+plt.xlabel("Salário")
+plt.ylabel("Quantidade de funcionários")
+
+plt.legend(loc="upper right")
+plt.tight_layout()
+plt.show()
