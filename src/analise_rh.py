@@ -94,3 +94,90 @@ print("Salário médio:", df1["SALARIO"].mean())
 print("Salário mediano:", df1["SALARIO"].median())
 print("Menor salário:", df1["SALARIO"].min())
 print("Maior salário:", df1["SALARIO"].max())
+# Conferir as colunas disponíveis para as perguntas analíticas
+
+print("\nCOLUNAS DA QUERY 1")
+print(df1.columns.tolist())
+
+print("\nCOLUNAS DA QUERY 2")
+print(df2.columns.tolist())
+# Verificar salários em relação às faixas previstas para os cargos
+
+print("\nSALÁRIOS E FAIXAS DOS CARGOS — QUERY 1")
+
+print(
+    df1[
+        ["CARGO", "SALARIO", "SALARIO_MINIMO_CARGO", "SALARIO_MAXIMO_CARGO"]
+    ].head(10).to_string(index=False)
+)
+
+print(
+    "Salários abaixo do mínimo do cargo:",
+    (df1["SALARIO"] < df1["SALARIO_MINIMO_CARGO"]).sum()
+)
+
+print(
+    "Salários acima do máximo do cargo:",
+    (df1["SALARIO"] > df1["SALARIO_MAXIMO_CARGO"]).sum()
+)
+# Quantidade de funcionários por região — Query 2
+
+print("\nFUNCIONÁRIOS POR REGIÃO — QUERY 2")
+
+funcionarios_por_regiao = (
+    df2["REGIAO"]
+    .fillna("Não informado")
+    .value_counts()
+)
+
+print(funcionarios_por_regiao)
+print("Total de funcionários:", funcionarios_por_regiao.sum())
+# Estatísticas salariais por região — Query 2
+
+print("\nESTATÍSTICAS SALARIAIS POR REGIÃO — QUERY 2")
+
+salarios_por_regiao = (
+    df2.assign(REGIAO=df2["REGIAO"].fillna("Não informado"))
+    .groupby("REGIAO")["SALARIO"]
+    .agg(
+        funcionarios="count",
+        media="mean",
+        mediana="median"
+    )
+    .round(2)
+)
+
+print(salarios_por_regiao)
+# Estatísticas salariais por departamento — Query 2
+
+print("\nESTATÍSTICAS SALARIAIS POR DEPARTAMENTO — QUERY 2")
+
+salarios_por_departamento = (
+    df2.assign(
+        DEPARTAMENTO=df2["DEPARTAMENTO"].fillna("Não informado")
+    )
+    .groupby("DEPARTAMENTO")["SALARIO"]
+    .agg(
+        funcionarios="count",
+        media="mean",
+        mediana="median"
+    )
+    .round(2)
+    .sort_values("media", ascending=False)
+)
+
+print(salarios_por_departamento.to_string())
+# Verificar onde estão os funcionários de Sales e Shipping
+
+print("\nSALES E SHIPPING POR REGIÃO — QUERY 2")
+
+sales_shipping = df2[
+    df2["DEPARTAMENTO"].isin(["Sales", "Shipping"])
+].copy()
+
+print(
+    pd.crosstab(
+        sales_shipping["DEPARTAMENTO"],
+        sales_shipping["REGIAO"].fillna("Não informado")
+    ).to_string()
+)

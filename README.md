@@ -231,4 +231,33 @@ As comparações por departamento, cargo e região serão realizadas nas próxim
 
 Os valores salariais são apresentados sem símbolo de moeda, pois a moeda não foi confirmada na documentação da base.
 
+## Perguntas analíticas e principais achados
+
+### 1. Os salários estão dentro das faixas cadastradas para os cargos?
+
+Na Query 1, foram analisados 19 funcionários com salários iguais ou superiores a 10.000. Nenhum deles apresentou salário abaixo do mínimo ou acima do máximo cadastrado para seu respectivo cargo.
+
+Esse resultado se limita aos 19 funcionários selecionados e não permite afirmar que todos os 107 funcionários da base estejam dentro das faixas salariais.
+
+### 2. Como os salários se distribuem pelas regiões dos departamentos?
+
+Na Query 2, foram identificados 70 funcionários associados a departamentos nas Américas, com média salarial de 5.191,66 e mediana de 3.300,00. Na Europa, foram identificados 36 funcionários, com média de 8.916,67 e mediana de 8.900,00. Um funcionário não possui região informada.
+
+Os salários associados aos departamentos europeus são mais elevados tanto pela média quanto pela mediana. Entretanto, esse resultado não demonstra que a localização geográfica seja a causa da diferença.
+
+### 3. A composição dos departamentos ajuda a interpretar a diferença salarial entre as regiões?
+
+Sales possui 34 funcionários, média salarial de 8.955,88 e mediana de 8.900,00. Shipping possui 45 funcionários, média de 3.475,56 e mediana de 3.100,00.
+
+O cruzamento dos dados mostrou que todos os 34 funcionários de Sales estão associados à Europa, enquanto todos os 45 de Shipping estão associados às Américas.
+
+Essa distribuição ajuda a interpretar a diferença salarial observada entre as regiões. Contudo, como os funcionários desses dois departamentos não estão distribuídos entre ambas as regiões, não é possível separar, nessa comparação, o efeito da localização do efeito da composição dos departamentos.
+
+### Limitações da análise
+
+- A Query 1 contém somente funcionários com salários iguais ou superiores a 10.000.
+- A região registrada representa a localização do departamento, não necessariamente a residência do funcionário.
+- Departamentos com poucos funcionários exigem cautela na interpretação das médias.
+- As diferenças observadas são descritivas e não demonstram relações de causa e efeito.
+
 
