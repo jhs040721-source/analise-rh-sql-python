@@ -260,4 +260,13 @@ Essa distribuição ajuda a interpretar a diferença salarial observada entre as
 - Departamentos com poucos funcionários exigem cautela na interpretação das médias.
 - As diferenças observadas são descritivas e não demonstram relações de causa e efeito.
 
+### Mediana salarial por cargo — Query 1
+
+A Query 1 apresenta 19 funcionários com salários iguais ou superiores a 10.000. Para comparar os cargos, foi utilizada a mediana salarial e também foi informada a quantidade de funcionários de cada grupo.
+
+Entre os cargos com mais de um funcionário, Administration Vice President apresenta mediana salarial de 17.000, Sales Manager de 12.000 e Sales Representative de 10.250.
+
+Alguns cargos possuem apenas um funcionário na Query 1. Nesses casos, o valor apresentado como mediana corresponde ao salário desse único registro e não deve ser interpretado como uma medida representativa de um grupo.
+
+O gráfico evidencia diferenças salariais entre os cargos presentes no recorte analisado, mas os resultados não representam todos os funcionários da empresa, pois a Query 1 considera somente salários iguais ou superiores a 10.000.
 

@@ -224,3 +224,70 @@ plt.ylabel("Quantidade de funcionários")
 plt.legend(loc="upper right")
 plt.tight_layout()
 plt.show()
+
+# Quantidade de funcionários por cargo — Query 1
+
+print("\nFUNCIONÁRIOS POR CARGO — QUERY 1")
+
+funcionarios_por_cargo = df1["CARGO"].value_counts()
+
+print(funcionarios_por_cargo)
+print("Total de funcionários:", funcionarios_por_cargo.sum())
+
+# Mediana salarial por cargo — Query 1
+
+print("\nMEDIANA SALARIAL POR CARGO — QUERY 1")
+
+salarios_por_cargo = (
+    df1.groupby("CARGO")["SALARIO"]
+    .agg(
+        funcionarios="count",
+        mediana="median"
+    )
+    .sort_values("mediana", ascending=False)
+)
+
+print(salarios_por_cargo.to_string())
+# Gráfico da mediana salarial por cargo — Query 1
+
+salarios_por_cargo_grafico = (
+    df1.groupby("CARGO")["SALARIO"]
+    .agg(
+        funcionarios="count",
+        mediana="median"
+    )
+    .sort_values("mediana")
+)
+
+rotulos_cargos = [
+    f"{cargo} (n={int(funcionarios)})"
+    for cargo, funcionarios in zip(
+        salarios_por_cargo_grafico.index,
+        salarios_por_cargo_grafico["funcionarios"]
+    )
+]
+
+plt.figure(figsize=(11, 7))
+
+plt.barh(
+    rotulos_cargos,
+    salarios_por_cargo_grafico["mediana"]
+)
+for indice, valor in enumerate(salarios_por_cargo_grafico["mediana"]):
+    plt.text(
+        valor + 300,
+        indice,
+        f"{valor:.0f}",
+        va="center"
+    )
+
+plt.title("Mediana salarial por cargo — Query 1 (salários ≥ 10.000)")
+plt.xlabel("Salário mediano")
+plt.ylabel("Cargo")
+
+plt.xlim(
+    0,
+    salarios_por_cargo_grafico["mediana"].max() * 1.12
+)
+plt.tight_layout()
+plt.show()
