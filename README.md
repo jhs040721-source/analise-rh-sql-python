@@ -1,4 +1,86 @@
 # Análise de RH com SQL e Python
+
+**Aluno:** José Humberto de Souza
+**Turma:** VISUALIZAÇÃO DE DADOS E BUSINESS INTELLIGENCE [T3]
+
+## Objetivo do projeto
+
+Este projeto tem como objetivo analisar dados de Recursos Humanos com foco em funcionários, cargos, departamentos, salários e distribuição geográfica. O trabalho utiliza consultas SQL para extração dos dados e Python para realizar análise exploratória, cálculos estatísticos e visualizações.
+
+A análise busca compreender principalmente:
+
+- a distribuição dos salários;
+- a relação entre cargos, departamentos e remuneração;
+- os padrões salariais observados entre regiões e países;
+- as diferenças entre média e mediana na interpretação dos salários.
+
+## Ferramentas utilizadas
+
+- **FreeSQL — schema Human Resources (HR):** consulta e extração dos dados;
+- **SQL:** construção das consultas e relacionamentos entre as tabelas;
+- **Python:** análise exploratória e estatística;
+- **Pandas:** manipulação e análise dos dados;
+- **Matplotlib:** criação e exportação dos gráficos;
+- **VS Code:** desenvolvimento e execução do projeto;
+- **Git e GitHub:** controle de versão e publicação do repositório.
+
+## Consultas utilizadas
+
+### Query 1 — Salários por departamento e cargo
+
+A Query 1 relaciona as tabelas de funcionários, departamentos e cargos. O objetivo é analisar salários por departamento e cargo e comparar os salários observados com as faixas mínima e máxima cadastradas para cada cargo.
+
+Foi utilizado o filtro:
+
+`SALARIO >= 10000`
+
+O resultado contém **19 funcionários** e é utilizado principalmente nas análises relacionadas a cargos e faixas salariais.
+
+### Query 2 — Funcionários por região e localização
+
+A Query 2 relaciona funcionários, departamentos, localizações, países e regiões. Seu objetivo é permitir uma análise mais ampla dos salários e de sua distribuição geográfica.
+
+Foi utilizado o filtro:
+
+`SALARIO > 0`
+
+O resultado contém **107 funcionários** e permite analisar salário, departamento, cidade, estado, país e região.
+
+## Estrutura do repositório
+
+O projeto está organizado da seguinte forma:
+
+```text
+projeto-rh-sql-python/
+├── data/
+│   └── raw/
+│       ├── query_01.csv
+│       └── query_02.csv
+├── outputs/
+│   └── graficos/
+│       ├── s4_1_distribuicao_salarial.png
+│       ├── s4_2_salarios_por_cargo.png
+│       ├── s4_3_salarios_pais_americas.png
+│       └── s4_3_salarios_pais_europe.png
+├── sql/
+│   ├── query_1.sql
+│   └── query_2.sql
+├── src/
+│   └── analise_rh.py
+├── README.md
+└── requirements.txt
+```
+
+### Função das principais pastas
+
+- **data/raw/** — contém os arquivos CSV exportados a partir das consultas SQL.
+- **sql/** — contém as duas consultas executadas para extração dos dados.
+- **src/** — contém o script Python responsável pela análise exploratória, cálculos estatísticos e geração dos gráficos.
+- **outputs/graficos/** — contém as visualizações finais exportadas pelo script Python.
+- **requirements.txt** — registra as principais bibliotecas utilizadas no projeto.
+- **README.md** — documenta o objetivo, metodologia, resultados e instruções para execução do projeto.
+
+
 ## Mapeamento inicial das tabelas HR
 
 ### Consulta de salários por departamento e cargo
@@ -55,13 +137,6 @@ está vinculado, não necessariamente ao seu local de residência.
 - A moeda dos salários não foi confirmada; os valores não são
   apresentados como reais (R$).
 
-## Situação da etapa de extração
-
-- Consultas SQL e CSVs publicados na branch `main`.
-- CSVs abertos no VS Code para conferência de legibilidade.
-- Commit de inclusão dos CSVs: `f9f881d`.
-- Commit de integração dos CSVs à main: `2179e33`.
-- Preparação do ambiente Python: concluída e documentada. Análise exploratória dos dados: próxima etapa.
 
 ## Preparação do ambiente Python
 
@@ -71,14 +146,6 @@ Preparar um ambiente de desenvolvimento Python no VS Code para realizar a análi
 
 O ambiente utiliza bibliotecas para manipulação de dados, cálculos estatísticos e geração de gráficos.
 
-### Ferramentas utilizadas
-
-- Python: linguagem de programação utilizada na análise.
-- VS Code: editor de código e ambiente de desenvolvimento.
-- Pandas: manipulação, organização e análise de dados.
-- Matplotlib: criação de gráficos e visualizações.
-- Seaborn: visualização estatística dos dados.
-- Git e GitHub: controle de versões e publicação do projeto.
 
 ### Criação do ambiente virtual
 
@@ -120,7 +187,8 @@ As principais bibliotecas instaladas são:
 | --- | --- |
 | Pandas | 3.0.6 |
 | Matplotlib | 3.11.2 |
-| Seaborn | 0.13.2 |
+| NumPy | 2.5.3 |
+O arquivo `requirements.txt` contém também as demais dependências instaladas no ambiente utilizado no desenvolvimento.
 
 ### Teste de reprodução do ambiente
 
@@ -169,7 +237,7 @@ Foram realizadas verificações de valores ausentes, registros duplicados e cons
 - Query 2: nenhum registro duplicado. Foram identificados dois funcionários com informações geográficas incompletas.
 - Os salários das duas consultas respeitam os filtros estabelecidos no SQL.
 
-### Tratamento dos dados
+### Decisões de Tratamento
 
 Não foi necessário excluir ou corrigir registros.
 
@@ -227,7 +295,7 @@ Como as duas consultas utilizam a mesma base de dados, essa diferença é uma co
 
 A Query 2 oferece uma visão mais abrangente da distribuição salarial dos funcionários.
 
-As comparações por departamento, cargo e região serão realizadas nas próximas etapas para identificar padrões de remuneração relevantes para a análise de RH.
+As comparações por departamento, cargo e região foram realizadas nas etapas seguintes da análise, permitindo identificar diferenças na distribuição salarial e padrões relevantes para a interpretação dos dados de RH.
 
 Os valores salariais são apresentados sem símbolo de moeda, pois a moeda não foi confirmada na documentação da base.
 
@@ -245,13 +313,13 @@ Na Query 2, foram identificados 70 funcionários associados a departamentos nas 
 
 Os salários associados aos departamentos europeus são mais elevados tanto pela média quanto pela mediana. Entretanto, esse resultado não demonstra que a localização geográfica seja a causa da diferença.
 
-### 3. A composição dos departamentos ajuda a interpretar a diferença salarial entre as regiões?
+### 3. A composição dos departamentos ajuda a interpretar as diferenças salariais entre as regiões?
 
-Sales possui 34 funcionários, média salarial de 8.955,88 e mediana de 8.900,00. Shipping possui 45 funcionários, média de 3.475,56 e mediana de 3.100,00.
+A análise mostrou que o departamento Sales possui 34 funcionários, com mediana salarial de 8.900, enquanto Shipping possui 45 funcionários, com mediana de 3.100.
 
-O cruzamento dos dados mostrou que todos os 34 funcionários de Sales estão associados à Europa, enquanto todos os 45 de Shipping estão associados às Américas.
+Todos os funcionários de Sales estão associados à Europe, enquanto os funcionários de Shipping estão associados às Americas.
 
-Essa distribuição ajuda a interpretar a diferença salarial observada entre as regiões. Contudo, como os funcionários desses dois departamentos não estão distribuídos entre ambas as regiões, não é possível separar, nessa comparação, o efeito da localização do efeito da composição dos departamentos.
+Esse resultado ajuda a interpretar parte da diferença salarial observada entre as regiões, mas não permite concluir que a localização geográfica seja a causa dessas diferenças, pois a composição dos departamentos também varia entre elas.
 
 ### Limitações da análise
 
@@ -260,22 +328,120 @@ Essa distribuição ajuda a interpretar a diferença salarial observada entre as
 - Departamentos com poucos funcionários exigem cautela na interpretação das médias.
 - As diferenças observadas são descritivas e não demonstram relações de causa e efeito.
 
-### Mediana salarial por cargo — Query 1
+## Visualizações finais
 
-A Query 1 apresenta 19 funcionários com salários iguais ou superiores a 10.000. Para comparar os cargos, foi utilizada a mediana salarial e também foi informada a quantidade de funcionários de cada grupo.
+As visualizações foram construídas para complementar as estatísticas descritivas e facilitar a interpretação dos principais padrões encontrados nos dados.
 
-Entre os cargos com mais de um funcionário, Administration Vice President apresenta mediana salarial de 17.000, Sales Manager de 12.000 e Sales Representative de 10.250.
+### 1. Distribuição salarial — Query 2
 
-Alguns cargos possuem apenas um funcionário na Query 1. Nesses casos, o valor apresentado como mediana corresponde ao salário desse único registro e não deve ser interpretado como uma medida representativa de um grupo.
+![Distribuição salarial](outputs/graficos/s4_1_distribuicao_salarial.png)
 
-O gráfico evidencia diferenças salariais entre os cargos presentes no recorte analisado, mas os resultados não representam todos os funcionários da empresa, pois a Query 1 considera somente salários iguais ou superiores a 10.000.
+O histograma apresenta a distribuição salarial dos 107 funcionários da Query 2. Observa-se maior concentração de funcionários nas faixas salariais inferiores e intermediárias, com uma extensão da distribuição em direção aos salários mais elevados.
 
-### Distribuição salarial por país e região — Query 2
+A média salarial de 6.461,83 é ligeiramente superior à mediana de 6.200, indicando influência dos valores mais altos sobre a média.
 
-Para complementar a análise regional, foram construídos dois gráficos de pontos mostrando a distribuição dos salários por país, separados entre as regiões Americas e Europe. Cada ponto representa um funcionário, e a linha horizontal indica a mediana salarial observada em cada país.
+### 2. Mediana salarial por cargo — Query 1
 
-Na região Americas, observa-se maior concentração de funcionários nos Estados Unidos, com predominância de salários nas faixas inferiores e presença de valores mais elevados que ampliam a dispersão da distribuição. O Canadá possui poucos registros, o que limita a interpretação de sua mediana como padrão representativo.
+![Mediana salarial por cargo](outputs/graficos/s4_2_salarios_por_cargo.png)
 
-Na região Europe, a maior parte dos funcionários está concentrada no Reino Unido, onde os salários apresentam distribuição mais concentrada em níveis intermediários e superiores. A Alemanha possui quantidade muito reduzida de registros, portanto seu valor não deve ser interpretado como representativo de um padrão salarial do país.
+A Query 1 contém 19 funcionários com salários iguais ou superiores a 10.000. Para comparar os cargos foi utilizada a mediana salarial, acompanhada da quantidade de funcionários em cada grupo.
 
-Os gráficos mostram que a dispersão salarial varia entre os países presentes na base e acrescentam uma dimensão geográfica à análise realizada anteriormente. Entretanto, os resultados são descritivos e não permitem concluir que a região ou o país sejam responsáveis pelas diferenças salariais observadas. Além disso, a variável REGIAO corresponde à localização do departamento, e não necessariamente à residência do funcionário.
+Entre os cargos com mais de um funcionário, Administration Vice President apresenta mediana de 17.000, Sales Manager de 12.000 e Sales Representative de 10.250.
+
+Alguns cargos possuem somente um funcionário no recorte. Nesses casos, a mediana corresponde ao próprio salário individual e não deve ser considerada representativa de um grupo.
+
+### 3. Distribuição salarial por país — Americas
+
+![Distribuição salarial por país — Americas](outputs/graficos/s4_3_salarios_pais_americas.png)
+
+Na região Americas, observa-se forte concentração de funcionários nos Estados Unidos, com predominância de salários nas faixas inferiores e presença de valores mais elevados que ampliam a dispersão.
+
+O Canadá possui poucos registros, portanto sua mediana deve ser interpretada com cautela.
+
+### 4. Distribuição salarial por país — Europe
+
+![Distribuição salarial por país — Europe](outputs/graficos/s4_3_salarios_pais_europe.png)
+
+Na região Europe, a maior parte dos funcionários está concentrada no Reino Unido, onde os salários apresentam distribuição mais concentrada em níveis intermediários e superiores.
+
+A Alemanha possui quantidade muito reduzida de registros e, portanto, seus valores não devem ser interpretados como representativos de um padrão salarial do país.
+
+### Síntese das visualizações
+
+Os gráficos mostram diferenças na distribuição dos salários entre cargos, países e regiões e complementam os resultados estatísticos obtidos na análise.
+
+Essas diferenças são descritivas e não permitem concluir que cargo, departamento, país ou região sejam isoladamente responsáveis pelos níveis salariais observados. Além disso, a variável REGIAO representa a localização do departamento ao qual o funcionário está associado, e não necessariamente seu local de residência.
+
+## Limitações e melhorias futuras
+
+### Limitações
+
+- A Query 1 considera somente funcionários com salários iguais ou superiores a 10.000 e, portanto, não representa o conjunto completo de funcionários.
+- A variável REGIAO representa a localização do departamento ao qual o funcionário está associado, e não necessariamente sua residência.
+- Alguns cargos, países e departamentos possuem poucos registros, o que exige cautela na interpretação de médias e medianas.
+- As diferenças observadas são descritivas e não permitem estabelecer relações de causa e efeito.
+- A moeda associada aos valores salariais não foi confirmada na documentação da base.
+
+### Melhorias futuras
+
+Como evolução do projeto, poderiam ser incorporadas novas análises, como:
+
+- incluir cargo na análise geográfica para comparar remuneração de funções semelhantes entre regiões;
+- ampliar as visualizações para relacionar cargos, departamentos e localização;
+- criar indicadores adicionais de dispersão salarial;
+- estruturar um painel interativo em ferramenta de Business Intelligence.
+
+## Limitações e melhorias futuras
+
+### Limitações
+
+- A Query 1 considera somente funcionários com salários iguais ou superiores a 10.000 e, portanto, não representa o conjunto completo de funcionários.
+- A variável REGIAO representa a localização do departamento ao qual o funcionário está associado, e não necessariamente sua residência.
+- Alguns cargos, países e departamentos possuem poucos registros, o que exige cautela na interpretação de médias e medianas.
+- As diferenças observadas são descritivas e não permitem estabelecer relações de causa e efeito.
+- A moeda associada aos valores salariais não foi confirmada na documentação da base.
+
+### Melhorias futuras
+
+Como evolução do projeto, poderiam ser incorporadas novas análises, como:
+
+- incluir cargo na análise geográfica para comparar remuneração de funções semelhantes entre regiões;
+- ampliar as visualizações para relacionar cargos, departamentos e localização;
+- criar indicadores adicionais de dispersão salarial;
+- estruturar um painel interativo em ferramenta de Business Intelligence.
+
+## Como executar o projeto
+
+A execução deve ser realizada a partir da pasta raiz do repositório.
+
+### 1. Criar o ambiente virtual
+
+```powershell
+py -m venv .venv
+```
+
+### 2. Ativar o ambiente virtual no Windows
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+### 3. Instalar as dependências
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+### 4. Executar a análise
+
+```powershell
+python src/analise_rh.py
+```
+
+O script carrega os arquivos `data/raw/query_01.csv` e `data/raw/query_02.csv`, executa a análise exploratória e estatística e gera os gráficos finais na pasta:
+
+```text
+outputs/graficos/
+```
+
+Os arquivos CSV originais devem permanecer em `data/raw/`, pois representam os resultados exportados das consultas SQL.
