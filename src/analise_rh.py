@@ -291,3 +291,120 @@ plt.xlim(
 )
 plt.tight_layout()
 plt.show()
+
+# ============================================================
+# S4.3 — Distribuição dos salários por país e região
+# ============================================================
+
+print("\nS4.3 — FUNCIONÁRIOS POR PAÍS E REGIÃO")
+
+# Separação das duas regiões analisadas
+americas = df2[df2["REGIAO"] == "Americas"].copy()
+europe = df2[df2["REGIAO"] == "Europe"].copy()
+
+# Quantidade de funcionários por país
+print("\nAmericas:")
+print(americas.groupby("PAIS").size().sort_values(ascending=False))
+
+print("\nEurope:")
+print(europe.groupby("PAIS").size().sort_values(ascending=False))
+
+# ------------------------------------------------------------
+# Gráfico 1 — Americas
+# ------------------------------------------------------------
+
+import numpy as np
+np.random.seed(42)
+
+paises_americas = americas["PAIS"].dropna().unique()
+
+plt.figure(figsize=(8, 5))
+
+for posicao, pais in enumerate(paises_americas):
+    dados_pais = americas[
+        americas["PAIS"] == pais
+    ]["SALARIO"]
+
+    # Pequena dispersão horizontal para visualizar pontos repetidos
+    jitter = np.random.uniform(
+        posicao - 0.12,
+        posicao + 0.12,
+        size=len(dados_pais)
+    )
+
+    plt.scatter(
+        jitter,
+        dados_pais,
+        alpha=0.65,
+        s=55
+    )
+
+    # Mediana salarial do país
+    mediana = dados_pais.median()
+
+    plt.hlines(
+        mediana,
+        posicao - 0.22,
+        posicao + 0.22,
+        linewidth=3
+    )
+
+plt.xticks(
+    range(len(paises_americas)),
+    paises_americas
+)
+
+plt.title("Distribuição salarial por país — Americas")
+plt.xlabel("País")
+plt.ylabel("Salário")
+plt.grid(axis="y", alpha=0.25)
+plt.tight_layout()
+plt.show()
+
+
+# ------------------------------------------------------------
+# Gráfico 2 — Europe
+# ------------------------------------------------------------
+
+paises_europe = europe["PAIS"].dropna().unique()
+
+plt.figure(figsize=(8, 5))
+
+for posicao, pais in enumerate(paises_europe):
+    dados_pais = europe[
+        europe["PAIS"] == pais
+    ]["SALARIO"]
+
+    jitter = np.random.uniform(
+        posicao - 0.12,
+        posicao + 0.12,
+        size=len(dados_pais)
+    )
+
+    plt.scatter(
+        jitter,
+        dados_pais,
+        alpha=0.65,
+        s=55
+    )
+
+    mediana = dados_pais.median()
+
+    plt.hlines(
+        mediana,
+        posicao - 0.22,
+        posicao + 0.22,
+        linewidth=3
+    )
+
+plt.xticks(
+    range(len(paises_europe)),
+    paises_europe
+)
+
+plt.title("Distribuição salarial por país — Europe")
+plt.xlabel("País")
+plt.ylabel("Salário")
+plt.grid(axis="y", alpha=0.25)
+plt.tight_layout()
+plt.show()

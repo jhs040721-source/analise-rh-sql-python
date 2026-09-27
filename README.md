@@ -270,3 +270,12 @@ Alguns cargos possuem apenas um funcionário na Query 1. Nesses casos, o valor a
 
 O gráfico evidencia diferenças salariais entre os cargos presentes no recorte analisado, mas os resultados não representam todos os funcionários da empresa, pois a Query 1 considera somente salários iguais ou superiores a 10.000.
 
+### Distribuição salarial por país e região — Query 2
+
+Para complementar a análise regional, foram construídos dois gráficos de pontos mostrando a distribuição dos salários por país, separados entre as regiões Americas e Europe. Cada ponto representa um funcionário, e a linha horizontal indica a mediana salarial observada em cada país.
+
+Na região Americas, observa-se maior concentração de funcionários nos Estados Unidos, com predominância de salários nas faixas inferiores e presença de valores mais elevados que ampliam a dispersão da distribuição. O Canadá possui poucos registros, o que limita a interpretação de sua mediana como padrão representativo.
+
+Na região Europe, a maior parte dos funcionários está concentrada no Reino Unido, onde os salários apresentam distribuição mais concentrada em níveis intermediários e superiores. A Alemanha possui quantidade muito reduzida de registros, portanto seu valor não deve ser interpretado como representativo de um padrão salarial do país.
+
+Os gráficos mostram que a dispersão salarial varia entre os países presentes na base e acrescentam uma dimensão geográfica à análise realizada anteriormente. Entretanto, os resultados são descritivos e não permitem concluir que a região ou o país sejam responsáveis pelas diferenças salariais observadas. Além disso, a variável REGIAO corresponde à localização do departamento, e não necessariamente à residência do funcionário.
