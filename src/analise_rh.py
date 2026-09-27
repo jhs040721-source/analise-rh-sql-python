@@ -1,6 +1,8 @@
 import pandas as pd
+from pathlib import Path
 
-import pandas as pd
+PASTA_GRAFICOS = Path("outputs/graficos")
+PASTA_GRAFICOS.mkdir(parents=True, exist_ok=True)
 
 # Importar o primeiro conjunto de dados
 df1 = pd.read_csv("data/raw/query_01.csv")
@@ -223,6 +225,11 @@ plt.ylabel("Quantidade de funcionários")
 
 plt.legend(loc="upper right")
 plt.tight_layout()
+plt.savefig(
+    PASTA_GRAFICOS / "s4_1_distribuicao_salarial.png",
+    dpi=300,
+    bbox_inches="tight"
+)
 plt.show()
 
 # Quantidade de funcionários por cargo — Query 1
@@ -290,6 +297,11 @@ plt.xlim(
     salarios_por_cargo_grafico["mediana"].max() * 1.12
 )
 plt.tight_layout()
+plt.savefig(
+    PASTA_GRAFICOS / "s4_2_salarios_por_cargo.png",
+    dpi=300,
+    bbox_inches="tight"
+)
 plt.show()
 
 # ============================================================
@@ -359,6 +371,11 @@ plt.xlabel("País")
 plt.ylabel("Salário")
 plt.grid(axis="y", alpha=0.25)
 plt.tight_layout()
+plt.savefig(
+    PASTA_GRAFICOS / "s4_3_salarios_pais_americas.png",
+    dpi=300,
+    bbox_inches="tight"
+)
 plt.show()
 
 
@@ -407,4 +424,10 @@ plt.xlabel("País")
 plt.ylabel("Salário")
 plt.grid(axis="y", alpha=0.25)
 plt.tight_layout()
+plt.savefig(
+    PASTA_GRAFICOS / "s4_3_salarios_pais_europe.png",
+    dpi=300,
+    bbox_inches="tight"
+)
 plt.show()
+
