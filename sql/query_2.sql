@@ -3,6 +3,7 @@ SELECT
     e.first_name || ' ' || e.last_name AS nome_funcionario,
     e.salary AS salario,
     d.department_name AS departamento,
+    j.job_title AS cargo,
     l.city AS cidade,
     l.state_province AS estado,
     c.country_name AS pais,
@@ -10,6 +11,8 @@ SELECT
 FROM HR.employees e
 LEFT JOIN HR.departments d
     ON e.department_id = d.department_id
+LEFT JOIN HR.jobs j
+    ON e.job_id = j.job_id
 LEFT JOIN HR.locations l
     ON d.location_id = l.location_id
 LEFT JOIN HR.countries c
