@@ -11,5 +11,5 @@ LEFT JOIN HR.departments d
     ON e.department_id = d.department_id
 LEFT JOIN HR.jobs j
     ON e.job_id = j.job_id
-WHERE e.salary >= 10000
+WHERE e.salary > 0
 ORDER BY e.salary DESC;
