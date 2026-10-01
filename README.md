@@ -3,6 +3,15 @@
 **Aluno:** José Humberto de Souza
 **Turma:** VISUALIZAÇÃO DE DADOS E BUSINESS INTELLIGENCE [T3]
 
+## Organização do projeto
+
+O desenvolvimento deste trabalho foi organizado no **Trello**, utilizando cartões e etapas para acompanhar as atividades do projeto, desde a definição das consultas SQL até a análise exploratória, geração dos gráficos, documentação e validação final.
+
+O quadro também foi utilizado para orientar as sprints e registrar a evolução das entregas.
+
+**Quadro do projeto no Trello:**  
+https://trello.com/b/uI9OSd7e/projeto-avaliativo-an%C3%A1lise-de-rh-com-sql-e-python
+
 ## Objetivo do projeto
 
 Este projeto tem como objetivo analisar dados de Recursos Humanos com foco em funcionários, cargos, departamentos, salários e distribuição geográfica. O trabalho utiliza consultas SQL para extração dos dados e Python para realizar análise exploratória, cálculos estatísticos e visualizações.
@@ -573,3 +582,15 @@ outputs/graficos/
 ```
 
 Os arquivos CSV originais devem permanecer em `data/raw/`, pois representam os resultados exportados das consultas SQL.
+
+## Organização e apresentação do projeto
+
+O desenvolvimento deste projeto foi organizado com apoio do **Trello**, utilizado para estruturar as etapas, orientar as sprints e acompanhar a evolução das atividades.
+
+**Quadro do projeto no Trello:**  
+https://trello.com/b/uI9OSd7e/projeto-avaliativo-an%C3%A1lise-de-rh-com-sql-e-python
+
+A apresentação técnica do projeto está disponível no YouTube.
+
+**Vídeo de apresentação:**  
+https://youtu.be/TiGjCjMdj-M
