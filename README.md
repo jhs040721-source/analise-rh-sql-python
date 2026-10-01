@@ -28,13 +28,13 @@ A análise busca compreender principalmente:
 
 ### Query 1 — Salários por departamento e cargo
 
-A Query 1 relaciona as tabelas de funcionários, departamentos e cargos. O objetivo é analisar salários por departamento e cargo e comparar os salários observados com as faixas mínima e máxima cadastradas para cada cargo.
+A Query 1 relaciona as tabelas de funcionários, departamentos e cargos. O objetivo é analisar os salários por departamento e cargo, além de comparar os salários observados com as faixas mínima e máxima cadastradas para cada cargo.
 
 Foi utilizado o filtro:
 
-`SALARIO >= 10000`
+`SALARIO > 0`
 
-O resultado contém **19 funcionários** e é utilizado principalmente nas análises relacionadas a cargos e faixas salariais.
+O resultado contém **107 funcionários**, contemplando todos os registros com salários válidos e permitindo uma análise completa da distribuição salarial por cargo.
 
 ### Query 2 — Funcionários por região e localização
 
@@ -103,21 +103,28 @@ exportados em CSV pelo FreeSQL e salvos em `data/raw/`.
 
 ## Arquivos disponíveis
 
-| Consulta | Arquivo SQL | Resultado CSV | Registros | Colunas |
-| --- | --- | --- | --- | --- |
-| Query 1 | `sql/query_1.sql` | `data/raw/query_01.csv` | 19 | 7 |
-| Query 2 | `sql/query_2.sql` | `data/raw/query_02.csv` | 107 | 8 |
+### Estrutura das consultas
 
-As quantidades de registros não incluem a linha de cabeçalho.
+| Consulta | Arquivo SQL | Arquivo CSV | Registros | Colunas |
+| --- | --- | --- | ---: | ---: |
+| Query 1 | `sql/query_1.sql` | `data/raw/query_01.csv` | 107 | 7 |
+| Query 2 | `sql/query_2.sql` | `data/raw/query_02.csv` | 107 | 8 |
 
 ### Query 1 — Salários, departamentos e cargos
 
-Seleciona funcionários com salário maior ou igual a 10000.
-Inclui departamento, cargo e limites salariais do cargo,
-com ordenação por salário decrescente.
+A Query 1 seleciona todos os funcionários com salário maior que zero.
 
-Esse resultado representa um recorte salarial e não deve ser
-interpretado como o conjunto completo de funcionários.
+Ela inclui departamento, cargo e as faixas mínima e máxima cadastradas para cada cargo, com ordenação por salário decrescente.
+
+Com a correção do filtro, a Query 1 passou a contemplar os **107 funcionários com salários válidos**, permitindo analisar a distribuição salarial por cargo sem restringir a análise aos maiores salários.
+
+### Relação entre as duas consultas
+
+As duas consultas utilizam a mesma base de funcionários e contêm 107 registros com salários válidos.
+
+A Query 1 concentra as informações de cargo e faixa salarial, enquanto a Query 2 concentra as informações geográficas.
+
+O cruzamento das consultas pelo campo `EMPLOYEE_ID` apresentou correspondência para os 107 funcionários, sem divergências nos valores de salário.
 
 ### Query 2 — Localização dos departamentos dos funcionários
 
@@ -251,17 +258,25 @@ Os arquivos CSV originais permanecem inalterados.
 
 ### Limitações
 
-A Query 1 contém somente funcionários com salário maior ou igual a 10.000, não representando todos os funcionários.
+Alguns cargos possuem poucos funcionários e, em determinados casos, apenas um registro. Nessas situações, médias, medianas e amplitudes salariais devem ser interpretadas com cautela, pois não representam a variabilidade de um grupo maior.
 
-A Query 2 será utilizada para as análises geográficas. Os funcionários presentes nas duas consultas não serão contabilizados duas vezes.
+A base também não contém informações que permitam explicar as diferenças salariais entre funcionários que ocupam o mesmo cargo, como tempo de serviço, experiência profissional, escolaridade, desempenho, senioridade ou outros fatores relacionados à progressão salarial.
+
+Além disso, a composição dos cargos é diferente entre as regiões analisadas. Por esse motivo, diferenças entre médias salariais regionais não devem ser interpretadas como efeito exclusivo da localização geográfica.
+
+A variável `REGIAO` representa a localização do departamento ao qual o funcionário está associado e não necessariamente sua residência ou local físico de trabalho.
 
 ## Análise estatística dos salários
 
-Foram calculadas estatísticas descritivas com a biblioteca Pandas para compreender a distribuição salarial dos funcionários.
+Foram calculadas estatísticas descritivas com a biblioteca Pandas para compreender a distribuição salarial dos funcionários e apoiar as análises por cargo, departamento e região.
 
-### Resultados da Query 2 — Panorama salarial
+Após a revisão da Query 1, as duas consultas passaram a considerar os mesmos **107 funcionários com salários maiores que zero**.
 
-A Query 2 apresenta 107 funcionários com salários maiores que zero.
+A Query 1 concentra as informações de cargo e faixa salarial cadastrada, enquanto a Query 2 reúne principalmente as informações geográficas.
+
+### Panorama salarial geral
+
+Como as duas consultas utilizam os mesmos 107 funcionários e os mesmos valores salariais, os indicadores gerais de salário são equivalentes.
 
 | Indicador | Resultado |
 | --- | ---: |
@@ -273,60 +288,135 @@ A Query 2 apresenta 107 funcionários com salários maiores que zero.
 | Primeiro quartil (25%) | 3.100,00 |
 | Terceiro quartil (75%) | 8.900,00 |
 
-A metade central dos salários está entre 3.100,00 e 8.900,00. A média é ligeiramente superior à mediana, indicando uma possível influência dos salários mais elevados sobre o valor médio.
+A metade central dos salários está entre 3.100,00 e 8.900,00.
 
-### Resultados da Query 1 — Recorte salarial
+A média salarial é ligeiramente superior à mediana, indicando influência dos salários mais elevados sobre o valor médio.
 
-A Query 1 apresenta os 19 funcionários com salários iguais ou superiores a 10.000.
+Os valores são apresentados sem símbolo de moeda, pois a moeda associada aos salários não foi confirmada na documentação da base.
 
-| Indicador | Resultado |
-| --- | ---: |
-| Quantidade de funcionários | 19 |
-| Salário médio | 12.632,42 |
-| Salário mediano | 11.500,00 |
-| Menor salário | 10.000,00 |
-| Maior salário | 24.000,00 |
+### Query 1 — Salários e cargos
 
-### Influência dos filtros SQL
+A Query 1 passou a considerar todos os funcionários com salário maior que zero, totalizando **107 registros**.
 
-A Query 1 apresenta média salarial superior à Query 2 porque seleciona apenas os funcionários com salários iguais ou superiores a 10.000.
+Essa alteração permitiu analisar todos os cargos existentes na base, e não apenas os funcionários pertencentes às faixas salariais mais elevadas.
 
-Como as duas consultas utilizam a mesma base de dados, essa diferença é uma consequência esperada do filtro aplicado, não uma descoberta sobre dois grupos independentes.
+Além do salário observado, a consulta contém:
 
-A Query 2 oferece uma visão mais abrangente da distribuição salarial dos funcionários.
+- departamento;
+- cargo;
+- salário mínimo cadastrado para o cargo;
+- salário máximo cadastrado para o cargo.
 
-As comparações por departamento, cargo e região foram realizadas nas etapas seguintes da análise, permitindo identificar diferenças na distribuição salarial e padrões relevantes para a interpretação dos dados de RH.
+Essas informações permitiram ampliar a análise salarial e comparar os valores recebidos pelos funcionários com as faixas cadastradas para cada função.
 
-Os valores salariais são apresentados sem símbolo de moeda, pois a moeda não foi confirmada na documentação da base.
+### Validação entre as duas consultas
+
+As Queries 1 e 2 foram cruzadas utilizando o campo `EMPLOYEE_ID` como identificador do funcionário.
+
+A validação apresentou os seguintes resultados:
+
+- 107 funcionários encontrados nas duas consultas;
+- nenhum funcionário presente exclusivamente em uma das consultas;
+- nenhuma divergência entre os valores de salário;
+- um funcionário sem região informada.
+
+Esse resultado confirmou a consistência entre as duas extrações e permitiu integrar informações de cargo e localização nas análises complementares.
+
+---
 
 ## Perguntas analíticas e principais achados
 
 ### 1. Os salários estão dentro das faixas cadastradas para os cargos?
 
-Na Query 1, foram analisados 19 funcionários com salários iguais ou superiores a 10.000. Nenhum deles apresentou salário abaixo do mínimo ou acima do máximo cadastrado para seu respectivo cargo.
+Com a Query 1 ampliada, foi possível verificar os **107 funcionários**.
 
-Esse resultado se limita aos 19 funcionários selecionados e não permite afirmar que todos os 107 funcionários da base estejam dentro das faixas salariais.
+Nenhum funcionário apresentou salário abaixo do mínimo cadastrado para seu cargo e nenhum apresentou salário acima do máximo cadastrado.
+
+Portanto, dentro da base analisada, todos os salários observados encontram-se dentro das respectivas faixas mínima e máxima cadastradas para os cargos.
+
+---
 
 ### 2. Como os salários se distribuem pelas regiões dos departamentos?
 
-Na Query 2, foram identificados 70 funcionários associados a departamentos nas Américas, com média salarial de 5.191,66 e mediana de 3.300,00. Na Europa, foram identificados 36 funcionários, com média de 8.916,67 e mediana de 8.900,00. Um funcionário não possui região informada.
+Na Query 2 foram identificados:
 
-Os salários associados aos departamentos europeus são mais elevados tanto pela média quanto pela mediana. Entretanto, esse resultado não demonstra que a localização geográfica seja a causa da diferença.
+| Região | Funcionários | Média salarial | Mediana salarial |
+| --- | ---: | ---: | ---: |
+| Americas | 70 | 5.191,66 | 3.300,00 |
+| Europe | 36 | 8.916,67 | 8.900,00 |
+| Não informado | 1 | 7.000,00 | 7.000,00 |
+
+Os funcionários associados a departamentos localizados na Europe apresentam média e mediana salarial superiores aos associados às Americas.
+
+Entretanto, essa diferença não permite concluir que a localização geográfica seja responsável pelos salários observados.
+
+A composição dos cargos e departamentos também varia de forma significativa entre as regiões.
+
+---
 
 ### 3. A composição dos departamentos ajuda a interpretar as diferenças salariais entre as regiões?
 
-A análise mostrou que o departamento Sales possui 34 funcionários, com mediana salarial de 8.900, enquanto Shipping possui 45 funcionários, com mediana de 3.100.
+Sim.
 
-Todos os funcionários de Sales estão associados à Europe, enquanto os funcionários de Shipping estão associados às Americas.
+O departamento `Sales` possui 34 funcionários e apresenta mediana salarial de 8.900,00.
 
-Esse resultado ajuda a interpretar parte da diferença salarial observada entre as regiões, mas não permite concluir que a localização geográfica seja a causa dessas diferenças, pois a composição dos departamentos também varia entre elas.
+O departamento `Shipping` possui 45 funcionários e apresenta mediana salarial de 3.100,00.
 
-### Limitações da análise
+Na base analisada:
 
-- A Query 1 contém somente funcionários com salários iguais ou superiores a 10.000.
-- A região registrada representa a localização do departamento, não necessariamente a residência do funcionário.
-- Departamentos com poucos funcionários exigem cautela na interpretação das médias.
-- As diferenças observadas são descritivas e não demonstram relações de causa e efeito.
+- todos os 34 funcionários de `Sales` estão associados à Europe;
+- todos os 45 funcionários de `Shipping` estão associados às Americas.
+
+Essa diferença de composição ajuda a interpretar parte da diferença salarial encontrada entre as regiões.
+
+Os resultados, portanto, devem ser entendidos como descritivos e não como evidência de que uma região, isoladamente, determine salários maiores ou menores.
+
+---
+
+### 4. Como os salários se distribuem entre os cargos?
+
+A Query 1 permite analisar a remuneração dos 107 funcionários por cargo.
+
+Entre os grupos com maior número de funcionários, destacam-se:
+
+| Cargo | Funcionários | Mediana salarial |
+| --- | ---: | ---: |
+| Sales Representative | 30 | 8.200,00 |
+| Shipping Clerk | 20 | 3.100,00 |
+| Stock Clerk | 20 | 2.700,00 |
+| Sales Manager | 5 | 12.000,00 |
+| Programmer | 5 | 4.800,00 |
+| Accountant | 5 | 7.800,00 |
+| Stock Manager | 5 | 7.900,00 |
+| Purchasing Clerk | 5 | 2.800,00 |
+
+Alguns cargos possuem apenas um funcionário. Nesses casos, a mediana corresponde ao próprio salário individual e deve ser interpretada com cautela.
+
+---
+
+### 5. Cargo e região podem ser analisados em conjunto?
+
+As duas consultas foram integradas pelo `EMPLOYEE_ID`, permitindo relacionar as informações de cargo da Query 1 com as regiões da Query 2.
+
+A análise mostrou uma composição ocupacional bastante diferente entre as regiões.
+
+Nas Americas há forte participação de funções ligadas a estoque, compras e expedição, como:
+
+- `Shipping Clerk`;
+- `Stock Clerk`;
+- `Purchasing Clerk`;
+- `Stock Manager`.
+
+Na Europe há forte concentração de funções relacionadas à área comercial, principalmente:
+
+- `Sales Representative`;
+- `Sales Manager`.
+
+Por exemplo, 29 dos 36 funcionários associados à Europe são `Sales Representative`.
+
+Essa composição reforça a necessidade de cautela ao comparar salários médios entre regiões, pois parte das diferenças observadas está relacionada aos cargos presentes em cada grupo.
+
+---
 
 ## Visualizações finais
 
@@ -336,79 +426,117 @@ As visualizações foram construídas para complementar as estatísticas descrit
 
 ![Distribuição salarial](outputs/graficos/s4_1_distribuicao_salarial.png)
 
-O histograma apresenta a distribuição salarial dos 107 funcionários da Query 2. Observa-se maior concentração de funcionários nas faixas salariais inferiores e intermediárias, com uma extensão da distribuição em direção aos salários mais elevados.
+O histograma apresenta a distribuição salarial dos 107 funcionários.
 
-A média salarial de 6.461,83 é ligeiramente superior à mediana de 6.200, indicando influência dos valores mais altos sobre a média.
+Observa-se maior concentração de funcionários nas faixas salariais inferiores e intermediárias, com uma extensão da distribuição em direção aos salários mais elevados.
+
+A média salarial de 6.461,83 é ligeiramente superior à mediana de 6.200,00, indicando influência dos valores mais altos sobre a média.
+
+---
 
 ### 2. Mediana salarial por cargo — Query 1
 
 ![Mediana salarial por cargo](outputs/graficos/s4_2_salarios_por_cargo.png)
 
-A Query 1 contém 19 funcionários com salários iguais ou superiores a 10.000. Para comparar os cargos foi utilizada a mediana salarial, acompanhada da quantidade de funcionários em cada grupo.
+O gráfico apresenta a mediana salarial de cada cargo e informa também a quantidade de funcionários existente em cada grupo por meio do indicador `n=`.
 
-Entre os cargos com mais de um funcionário, Administration Vice President apresenta mediana de 17.000, Sales Manager de 12.000 e Sales Representative de 10.250.
+A mediana permite representar o valor central de cada cargo com menor influência de salários extremos.
 
-Alguns cargos possuem somente um funcionário no recorte. Nesses casos, a mediana corresponde ao próprio salário individual e não deve ser considerada representativa de um grupo.
+Entre os cargos com maior número de funcionários, `Sales Representative` apresenta mediana de 8.200,00, `Shipping Clerk` apresenta mediana de 3.100,00 e `Stock Clerk` apresenta mediana de 2.700,00.
 
-### 3. Distribuição salarial por país — Americas
+Os cargos com apenas um funcionário devem ser interpretados com cautela, pois nesses casos a mediana corresponde ao próprio salário observado.
+
+---
+
+### 3. Salário médio e amplitude salarial observada por cargo
+
+![Salário médio e amplitude salarial por cargo](outputs/graficos/s4_2b_media_minimo_maximo_por_cargo.png)
+
+Esse gráfico complementa a análise da mediana.
+
+Para cada cargo:
+
+- a barra horizontal representa o salário médio observado;
+- a linha com hastes representa o intervalo entre o menor e o maior salário observado;
+- o indicador `n=` representa a quantidade de funcionários no cargo.
+
+A visualização permite identificar não apenas o nível médio de remuneração, mas também a amplitude salarial existente dentro de cada função.
+
+Nos cargos com apenas um funcionário, média, mínimo e máximo são iguais, não existindo variação salarial observável dentro do grupo.
+
+---
+
+### 4. Distribuição salarial por país — Americas
 
 ![Distribuição salarial por país — Americas](outputs/graficos/s4_3_salarios_pais_americas.png)
 
-Na região Americas, observa-se forte concentração de funcionários nos Estados Unidos, com predominância de salários nas faixas inferiores e presença de valores mais elevados que ampliam a dispersão.
+Na região Americas foram identificados 70 funcionários:
 
-O Canadá possui poucos registros, portanto sua mediana deve ser interpretada com cautela.
+- 68 associados aos Estados Unidos;
+- 2 associados ao Canadá.
 
-### 4. Distribuição salarial por país — Europe
+Há forte concentração de funcionários nos Estados Unidos e maior presença de salários nas faixas inferiores, embora também existam salários elevados que aumentam a dispersão.
+
+Como o Canadá possui somente dois registros, seus resultados devem ser interpretados com cautela.
+
+---
+
+### 5. Distribuição salarial por país — Europe
 
 ![Distribuição salarial por país — Europe](outputs/graficos/s4_3_salarios_pais_europe.png)
 
-Na região Europe, a maior parte dos funcionários está concentrada no Reino Unido, onde os salários apresentam distribuição mais concentrada em níveis intermediários e superiores.
+Na região Europe foram identificados 36 funcionários:
 
-A Alemanha possui quantidade muito reduzida de registros e, portanto, seus valores não devem ser interpretados como representativos de um padrão salarial do país.
+- 35 associados ao Reino Unido;
+- 1 associado à Alemanha.
+
+A maior parte dos funcionários está concentrada no Reino Unido, com salários predominantemente em níveis intermediários e superiores.
+
+A Alemanha possui apenas um registro e, portanto, seu valor não deve ser interpretado como representativo de um padrão salarial do país.
+
+---
 
 ### Síntese das visualizações
 
-Os gráficos mostram diferenças na distribuição dos salários entre cargos, países e regiões e complementam os resultados estatísticos obtidos na análise.
+As visualizações mostram diferentes perspectivas sobre a remuneração dos funcionários.
 
-Essas diferenças são descritivas e não permitem concluir que cargo, departamento, país ou região sejam isoladamente responsáveis pelos níveis salariais observados. Além disso, a variável REGIAO representa a localização do departamento ao qual o funcionário está associado, e não necessariamente seu local de residência.
+O histograma apresenta a distribuição geral dos salários.
+
+O gráfico de mediana permite comparar o valor central da remuneração entre os cargos.
+
+O gráfico de média, mínimo e máximo complementa essa análise ao demonstrar a amplitude salarial observada dentro de cada função.
+
+Os gráficos por país apresentam a distribuição geográfica dos salários.
+
+O cruzamento entre as duas consultas mostrou ainda que a composição dos cargos varia de forma importante entre as regiões, sendo esse um elemento relevante na interpretação das diferenças salariais observadas.
+
+As análises são descritivas e não permitem concluir que cargo, departamento, país ou região sejam isoladamente responsáveis pelos níveis de remuneração.
+
+A variável `REGIAO` representa a localização do departamento ao qual o funcionário está associado e não necessariamente seu local de residência.
+
+---
 
 ## Limitações e melhorias futuras
 
 ### Limitações
 
-- A Query 1 considera somente funcionários com salários iguais ou superiores a 10.000 e, portanto, não representa o conjunto completo de funcionários.
-- A variável REGIAO representa a localização do departamento ao qual o funcionário está associado, e não necessariamente sua residência.
-- Alguns cargos, países e departamentos possuem poucos registros, o que exige cautela na interpretação de médias e medianas.
-- As diferenças observadas são descritivas e não permitem estabelecer relações de causa e efeito.
+- A variável `REGIAO` representa a localização do departamento ao qual o funcionário está associado, e não necessariamente a residência do funcionário.
+- Alguns cargos possuem apenas um funcionário, limitando a interpretação de médias, medianas e amplitudes salariais nesses grupos.
+- Alguns países possuem quantidade muito reduzida de registros, especialmente Canadá e Alemanha.
+- A composição dos cargos varia entre as regiões, dificultando uma comparação direta dos salários regionais.
+- As diferenças encontradas são descritivas e não permitem estabelecer relações de causa e efeito.
 - A moeda associada aos valores salariais não foi confirmada na documentação da base.
 
 ### Melhorias futuras
 
 Como evolução do projeto, poderiam ser incorporadas novas análises, como:
 
-- incluir cargo na análise geográfica para comparar remuneração de funções semelhantes entre regiões;
-- ampliar as visualizações para relacionar cargos, departamentos e localização;
-- criar indicadores adicionais de dispersão salarial;
-- estruturar um painel interativo em ferramenta de Business Intelligence.
-
-## Limitações e melhorias futuras
-
-### Limitações
-
-- A Query 1 considera somente funcionários com salários iguais ou superiores a 10.000 e, portanto, não representa o conjunto completo de funcionários.
-- A variável REGIAO representa a localização do departamento ao qual o funcionário está associado, e não necessariamente sua residência.
-- Alguns cargos, países e departamentos possuem poucos registros, o que exige cautela na interpretação de médias e medianas.
-- As diferenças observadas são descritivas e não permitem estabelecer relações de causa e efeito.
-- A moeda associada aos valores salariais não foi confirmada na documentação da base.
-
-### Melhorias futuras
-
-Como evolução do projeto, poderiam ser incorporadas novas análises, como:
-
-- incluir cargo na análise geográfica para comparar remuneração de funções semelhantes entre regiões;
-- ampliar as visualizações para relacionar cargos, departamentos e localização;
-- criar indicadores adicionais de dispersão salarial;
-- estruturar um painel interativo em ferramenta de Business Intelligence.
+- ampliar a base de dados para permitir a comparação do mesmo cargo entre diferentes regiões;
+- calcular indicadores adicionais de dispersão salarial, como desvio padrão e intervalo interquartil por cargo;
+- analisar a posição de cada salário dentro da faixa mínima e máxima cadastrada para seu respectivo cargo;
+- relacionar cargos, departamentos e localização por meio de visualizações adicionais;
+- analisar possíveis diferenças salariais dentro de cargos com maior número de funcionários;
+- estruturar um painel interativo em ferramenta de Business Intelligence para permitir filtros por cargo, departamento, país e região.
 
 ## Como executar o projeto
 
