@@ -12,6 +12,9 @@ O quadro também foi utilizado para orientar as sprints e registrar a evolução
 **Quadro do projeto no Trello:**  
 https://trello.com/b/uI9OSd7e/projeto-avaliativo-an%C3%A1lise-de-rh-com-sql-e-python
 
+**Diagrama completo da arquitetura do projeto, mostrando o fluxo desde o planejamento até a entrega final**  
+https://whimsical.com/jose-s-workspace48/arquitetura-do-projeto-analise-de-rh-com-sql-e-python-9RVe89W1LL3Wc9MunrzZqu
+
 ## Objetivo do projeto
 
 Este projeto tem como objetivo analisar dados de Recursos Humanos com foco em funcionários, cargos, departamentos, salários e distribuição geográfica. O trabalho utiliza consultas SQL para extração dos dados e Python para realizar análise exploratória, cálculos estatísticos e visualizações.
